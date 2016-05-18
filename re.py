@@ -1,9 +1,15 @@
 #!/usr/bin/python
 import sys
 
+def num(s):
+    try:
+        return int(s)
+    except ValueError:
+        return float(s)
+
 def execute():
     if command_list[0].split(" ")[0] == "put":
-        stack.append(float(command_list[0].split(" ")[1]))
+        stack.append(num(command_list[0].split(" ")[1]))
     elif command_list[0] == "add":
         compute("add")
     elif command_list[0] == "sub":

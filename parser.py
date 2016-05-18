@@ -61,31 +61,46 @@ class Parser:
     def convertToRPN(self, tokens):
         out = []
         stack = []
-            #For all the input tokens [S1] read the next token [S2]
+        #For all the input tokens read the next token
         for token in tokens:
+            # If token is an operator (x)
             if self.isOperator(token):
-                    # If token is an operator (x) [S3]
+                # While there is an operator (y) at the top of the operators stack
                 while len(stack) != 0 and self.isOperator(stack[-1]):
-                        # [S4]
-                    if (self.isAssociative(token, LEFT_ASSOC)
-                        and self.cmpPrecedence(token, stack[-1]) <= 0) or (self.isAssociative(token, RIGHT_ASSOC)
-                        and self.cmpPrecedence(token, stack[-1]) < 0):
-                            # [S5] [S6]
+                    # if (x) is left-associative and its precedence is less 
+                    # or equal to that of (y) or (x) is right-associative
+                    # and its precedence is less than (y)
+                    if ((self.isAssociative(token, LEFT_ASSOC) and 
+                        self.cmpPrecedence(token, stack[-1]) <= 0) 
+                        or
+                        (self.isAssociative(token, RIGHT_ASSOC) and 
+                        self.cmpPrecedence(token, stack[-1]) < 0)):
+                        # Pop (y) from the stack
+                        # Add (y) output buffer
                         out.append(stack.pop())
                         continue
                     break
-                    # [S7]
+                # Push (x) on the stack
                 stack.append(token)
+            # Else If token is left parenthesis, then push it on the stack
             elif token == '(':
-                stack.append(token) # [S8]
+                stack.append(token)
+            
+            # Else If token is a right parenthesis
             elif token == ')':
-                    # [S9]
+                # Until the top token (from the stack) is left parenthesis
                 while len(stack) != 0 and stack[-1] != '(':
-                    out.append(stack.pop()) # [S10]
-                stack.pop() # [S11]
+                    # Pop from the stack to the output buffer
+                    out.append(stack.pop())
+                
+                # Also pop the left parenthesis but dont include it in the output buffer
+                stack.pop()
+            # Else add token to output buffer
             else:
-                out.append(token) # [S12]
+                out.append(token)
+
+        # While there are still operator tokens in the stack, pop them to output
         while len(stack) != 0:
-                # [S13]
             out.append(stack.pop())
+
         return out

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import sys
+import math
 
 def num(s):
     try:
@@ -22,6 +23,10 @@ def execute():
         compute("mod")
     elif command_list[0] == "pow":
         compute("pow")
+    elif command_list[0] == "sin":
+        compute("sin")
+    elif command_list[0] == "cos":
+        compute("cos")
     elif command_list[0] == "end":
         return end()
     else:
@@ -44,6 +49,10 @@ def compute(oper):
             n = stack.pop() % stack.pop()
         elif (oper == "pow"):
             n = stack.pop() ** stack.pop()
+        elif (oper == "sin"):
+            n = math.sin(stack.pop())
+        elif (oper == "cos"):
+            n = math.cos(stack.pop())
         stack.append(n)
     except:
         raise Warning("Two first values on the stack are not numbers") 

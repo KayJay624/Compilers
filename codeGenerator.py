@@ -26,6 +26,10 @@ class CodeGenerator:
 				commands.append("mod")
             elif item == "^":
 				commands.append("pow")
+            elif item == "sin":
+				commands.append("sin")
+            elif item == "cos":
+				commands.append("cos")
             elif item is not None:
                 commands.append("put " + item)
         

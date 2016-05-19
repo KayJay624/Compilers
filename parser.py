@@ -9,7 +9,9 @@ OPERATORS = {
     '*' : (5, LEFT_ASSOC),
     '/' : (5, RIGHT_ASSOC),
     '%' : (5, RIGHT_ASSOC),
-    '^' : (10, RIGHT_ASSOC)
+    '^' : (10, RIGHT_ASSOC),
+    'sin' : (15, RIGHT_ASSOC),
+    'cos' : (15, RIGHT_ASSOC)
 }
     
 class Node:
@@ -28,7 +30,10 @@ class Parser:
                 stack.append(node)
             else:
                 node = Node(item)
-                if self.isAssociative(item, LEFT_ASSOC):               
+                if item == 'sin' or item == 'cos':
+                    n1 = stack.pop()
+                    n2 = None
+                elif self.isAssociative(item, LEFT_ASSOC):               
                     n1 = stack.pop()
                     n2 = stack.pop()
                 else:
@@ -61,6 +66,7 @@ class Parser:
     def convertToRPN(self, tokens):
         out = []
         stack = []
+        print tokens
         #For all the input tokens read the next token
         for token in tokens:
             # If token is an operator (x)

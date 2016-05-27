@@ -5,11 +5,10 @@ from codeGenerator import CodeGenerator
 import sys
 
 for line in sys.stdin:
-    expression = str(line)
-    break
-
+	expression = str(line)
+	break
 print("Expression: " + expression)
- 
+
 scaner = Scaner()
 parser = Parser()
 codeGen = CodeGenerator()
@@ -17,16 +16,10 @@ codeGen = CodeGenerator()
 tokens = scaner.scan(expression)
 tree = parser.constructTree(tokens)
 commands = codeGen.createCommands(tree)
+
 cl = ""
-
 for item in commands:
-    print(item)
-    cl = cl + item + ";"
+	print(item)
+	cl = cl + item + ";"
+
 sys.stdout.write(cl)
-
-
-
-            
-
-
-
